@@ -236,25 +236,5 @@ and hand it over to Gudu SQLFlow for data lineage analysis.。
 ## Trouble shooting
 
 
-### 1. SystemError: java.lang.ClassNotFoundException: org.jpype.classloader.DynamicClassLoader
-
-```
-Traceback (most recent call last):
-File "/home/grq/python_data_lineage/dlineage.py", line 231, in <module>
-call_dataFlowAnalyzer(args)
-File "/home/grq/python_data_lineage/dlineage.py", line 20, in call_dataFlowAnalyzer
-jpype.startJVM(jvm, "-ea", jar)
-File "/usr/lib/python3/dist-packages/jpype/_core.py", line 224, in startJVM
-_jpype.startup(jvmpath, tuple(args),
-SystemError: java.lang.ClassNotFoundException: org.jpype.classloader.DynamicClassLoader
-```
-
-This problem is related to python3 jpype on ubuntu system. It seems that org.jpype.jar file is missing under /usr/lib/python3/dist-packages/
-just copy org.jpype.jar to /usr/lib/python3/dist-packages/
-
-```
-cp /usr/share/java/org.jpype.jar /usr/lib/python3/dist-packages/org.jpype.jar
-```
-
 ## Contact
 For further information, please contact support@gudusoft.com
