@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Data lineage view</title>
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <script src="jquery.min.js"></script>
+        <script src="sqlflow.widget.3.5.19.js"></script>
+        <script src="samplesql.js"></script>
+        <script>
+            var sqlflow;
+            const visualize = async () => {
+                let data = {};
+                data.dbVendor = $("#dbvendor").val();
+                data.sqlText = sqlflow.sqltext.get();
+                let options = [];
+                $('input:checkbox:checked').each(function (index, item) {
+                    options.push($(this).val());
+                });
+                data.ignoreRecordSet = false;
+                data.showConstantTable = false;
+                data.simpleShowFunction = false;
+                data.indirect = false;
+                data.tableLevel = false;
+                for(let op of options){
+                    if(op=='ignoreRecordSet'){
+                        data.ignoreRecordSet = true;
+                    }
+                    if(op=='simpleShowFunction'){
+                        data.simpleShowFunction = true;
+                    }
+                    if(op=='showConstantTable'){
+                        data.showConstantTable = true;
+                    }
+                    if(op=='indirect'){
+                        data.indirect = true;
+                    }
+                    if(op=='tableLevel'){
+                        data.tableLevel = true;
+                    }
+                }
+                $.ajax({
+                    url : "sqlflow/datalineage",
+                    type : "POST",
+                    data : JSON.stringify(data),
+                    dataType : 'json',
+                    contentType : 'application/json;charset=UTF-8',
+                    success : function(result) {
+                        sqlflow.visualizeJSON(JSON.parse(result.data), { layout: true });
+                    }
+                });
+            };
+
+            const visualizeER = async () => {
+                let data = {};
+                data.dbVendor = $("#dbvendor").val();
+                data.sqlText = sqlflow.sqltext.get();
+                $.ajax({
+                    url : "sqlflow/erdiagram",
+                    type : "POST",
+                    data : JSON.stringify(data),
+                    dataType : 'json',
+                    contentType : 'application/json;charset=UTF-8',
+                    success : function(result) {
+                        sqlflow.visualizeERJSON(JSON.parse(result.data), { layout: true });
+                    }
+                });
+            };
+
+            const dbvendorChange= async () => {
+                let vendor = $("#dbvendor").val();
+                sqlflow.vendor.set(vendor);
+                sqlflow.sqltext.set(sampleSQL[vendor.replace("dbv", "")]);
+                visualize();
+            };
+
+            document.addEventListener('DOMContentLoaded', async () => {
+                sqlflow = await SQLFlow.init({
+                    container: document.getElementById('sqlflow'),
+                    width: '100%',
+                    height: '100%',
+                    apiPrefix: '',
+                    component: {
+                        sqlEditor: true,
+                        graphLocate: true,
+                        minimap: true,
+                    },
+                });
+                sqlflow.vendor.set("dbvoracle");
+                sqlflow.sqltext.set(sampleSQL.oracle);
+                visualize();
+            });
+        </script>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+            }
+            .full {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            .top {
+                margin: 8px;
+            }
+            .select {
+                margin: 8px;
+                width: 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="full">
+            <form class="form-inline top">
+                <div class="form-group">
+                    <label for="dbvendor">dbvendor</label>
+                    <select id="dbvendor" class="form-control" onchange="dbvendorChange()">
+                        <option value="dbvoracle">oracle</option>
+                        <option value="dbvmysql">mysql</option>
+                        <option value="dbvmssql">mssql</option>
+                        <option value="dbvpostgresql">postgresql</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>setting</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="indirect" onclick="visualize()"> indirect
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="tableLevel" onclick="visualize()"> Table Level
+                    </label>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="visualize()">visualize</button>
+                <button type="button" class="btn btn-success" onclick="visualizeER()">visualize ER</button>
+            </form>
+            <div id="sqlflow"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: datalineage
+
+server:
+  port: 9600
+  servlet:
+    context-path: /

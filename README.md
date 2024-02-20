@@ -63,16 +63,16 @@ WHERE o.customer_id = c.customer_id;
 ```
 
 And visualize it as:
-![Oracle data lineage sample](samples/images/oracle_data_lineage.png)
+![Oracle data lineage sample](src/main/resources/static/samples/images/oracle_data_lineage.png)
 
 ### Oracle PL/SQL Data Lineage 
 ```
 python dlineage.py /t oracle /f samlples/oracle_plsql.sql /graph
 ```
 
-![Oracle PL/SQL data lineage sample](samples/images/oracle_plsql_data_lineage.png)
+![Oracle PL/SQL data lineage sample](src/main/resources/static/samples/images/oracle_plsql_data_lineage.png)
 
-The [source code of this sample Oracle PL/SQL](samples/oracle_plsql.sql).
+The [source code of this sample Oracle PL/SQL](src/main/resources/static/samples/oracle_plsql.sql).
 
 ### Able to analyze dynamic SQL to get data lineage (Postgres stored procedure)
 ```sql
@@ -88,16 +88,16 @@ END;
 $function$
 ```
 
-![Postgres stored procedure data lineage sample](samples/images/postgresql_plsql_data_lineage.png)
+![Postgres stored procedure data lineage sample](src/main/resources/static/samples/images/postgresql_plsql_data_lineage.png)
   
 ### Nested CTE with star columns (Snowflake SQL sample)
 ```
 python dlineage.py /t snowflake /f samlples/snowflake_nested_cte.sql /graph
 ```
 
-![Snowflake nested CTE data lineage sample](samples/images/snowflake_nested_cte_data_lineage.png)
+![Snowflake nested CTE data lineage sample](src/main/resources/static/samples/images/snowflake_nested_cte_data_lineage.png)
 
-The [snowflake SQL source code of this sample](samples/snowflake_nested_cte.sql).  
+The [snowflake SQL source code of this sample](src/main/resources/static/samples/snowflake_nested_cte.sql).  
 
 ### Analyze DDL and automatically draw an ER Diagram.
 
@@ -108,9 +108,9 @@ python dlineage.py /t sqlserver /f samples/sqlserver_er.sql /graph /er
 
 We can automatically obtain the ER Diagram of the following SQL Server database:
 
-![SQL Sever ER Diagram sample](samples/images/sqlserver_er_diagram.png)
+![SQL Sever ER Diagram sample](src/main/resources/static/samples/images/sqlserver_er_diagram.png)
 
-The [DDL script of the above ER diagram is here](samples/sqlserver_er.sql).
+The [DDL script of the above ER diagram is here](src/main/resources/static/samples/sqlserver_er.sql).
 
 ## Try your own SQL scripts
 
