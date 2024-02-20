@@ -70,7 +70,7 @@
             const dbvendorChange= async () => {
                 let vendor = $("#dbvendor").val();
                 sqlflow.vendor.set(vendor);
-                sqlflow.sqltext.set(sampleSQL[vendor.replace("dbv", "")]);
+                sqlflow.sqltext.set(sampleSQL[vendor]);
                 visualize();
             };
 
@@ -87,7 +87,7 @@
                     },
                 });
                 sqlflow.vendor.set("dbvoracle");
-                sqlflow.sqltext.set(sampleSQL.oracle);
+                sqlflow.sqltext.set(sampleSQL.dbvoracle);
                 visualize();
             });
         </script>
@@ -120,10 +120,32 @@
                 <div class="form-group">
                     <label for="dbvendor">dbvendor</label>
                     <select id="dbvendor" class="form-control" onchange="dbvendorChange()">
-                        <option value="dbvoracle">oracle</option>
+                        <option value="dbvathena">athena</option>
+                        <option value="dbvazuresql">azuresql</option>
+                        <option value="dbvbigquery">bigquery</option>
+                        <option value="dbvcouchbase">couchbase</option>
+                        <option value="dbvdatabricks">databricks</option>
+                        <option value="dbvdb2">db2</option>
+                        <option value="dbvgaussdb">gaussdb</option>
+                        <option value="dbvgreenplum">greenplum</option>
+                        <option value="dbvhana">hana</option>
+                        <option value="dbvhive">hive</option>
+                        <option value="dbvimpala">impala</option>
+                        <option value="dbvinformix">informix</option>
+                        <option value="dbvmdx">mdx</option>
                         <option value="dbvmysql">mysql</option>
                         <option value="dbvmssql">mssql</option>
+                        <option value="dbvnetezza">netezza</option>
+                        <option value="dbvopenedge">openedge</option>
+                        <option value="dbvoracle" selected>oracle</option>
                         <option value="dbvpostgresql">postgresql</option>
+                        <option value="dbvpresto">presto</option>
+                        <option value="dbvredshift">redshift</option>
+                        <option value="dbvsnowflake">snowflake</option>
+                        <option value="dbvsparksql">sparksql</option>
+                        <option value="dbvsybase">sybase</option>
+                        <option value="dbvteradata">teradata</option>
+                        <option value="dbvvertica">vertica</option>
                     </select>
                 </div>
                 <div class="form-group">
