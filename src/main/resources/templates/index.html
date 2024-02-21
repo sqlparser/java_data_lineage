@@ -14,7 +14,7 @@
                 data.dbVendor = $("#dbvendor").val();
                 data.sqlText = sqlflow.sqltext.get();
                 let options = [];
-                $('input:checkbox:checked').each(function (index, item) {
+                $("input[name='setting']:checked").each(function (index, item) {
                     options.push($(this).val());
                 });
                 data.ignoreRecordSet = false;
@@ -38,6 +38,13 @@
                     if(op=='tableLevel'){
                         data.tableLevel = true;
                     }
+                }
+                let showResultSetTypes = [];
+                $("input[name='showResultSetTypes']:checked").each(function (index, item) {
+                    showResultSetTypes.push($(this).val());
+                });
+                if(showResultSetTypes.length>0){
+                    data.showResultSetTypes = showResultSetTypes.join(",");
                 }
                 $.ajax({
                     url : "sqlflow/datalineage",
@@ -114,7 +121,7 @@
         <div class="full">
             <form class="form-inline top">
                 <div class="form-group">
-                    <label for="dbvendor">dbvendor</label>
+                    <label for="dbvendor">dbvendor: </label>
                     <select id="dbvendor" class="form-control" onchange="dbvendorChange()">
                         <option value="dbvathena">athena</option>
                         <option value="dbvazuresql">azuresql</option>
@@ -145,21 +152,72 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>setting</label>
+                    <label>setting: </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" value="indirect" onclick="visualize()"> indirect
+                        <input name="setting" type="checkbox" value="indirect" onclick="visualize()"> indirect
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
+                        <input name="setting" type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
+                        <input name="setting" type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
+                        <input name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" value="tableLevel" onclick="visualize()"> Table Level
+                        <input name="setting" type="checkbox" value="tableLevel" onclick="visualize()"> Table Level
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>showResultSetTypes: </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="array" onclick="visualize()"> array
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="struct" onclick="visualize()"> struct
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="result_of" onclick="visualize()"> result_of
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="cte" onclick="visualize()"> cte
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="insert_select" onclick="visualize()"> insert_select
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="update_select" onclick="visualize()"> update_select
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="merge_update" onclick="visualize()"> merge_update
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="merge_insert" onclick="visualize()"> merge_insert
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="output" onclick="visualize()"> output
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="update_set" onclick="visualize()"> update_set
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="pivot_table" onclick="visualize()"> pivot_table
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize()"> unpivot_table
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="rs" onclick="visualize()"> rs
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="function" onclick="visualize()"> function
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="case_when" onclick="visualize()"> case_when
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="showResultSetTypes" type="checkbox" value="curs" onclick="visualize()"> curs
                     </label>
                 </div>
                 <button type="button" class="btn btn-primary" onclick="visualize()">visualize data lineage</button>

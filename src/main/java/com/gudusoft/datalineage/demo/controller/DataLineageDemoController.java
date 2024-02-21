@@ -31,11 +31,13 @@ public class DataLineageDemoController {
         option.setShowConstantTable(req.isShowConstantTable());
         if(Objects.nonNull(req.getShowResultSetTypes())){
             option.showResultSetTypes(req.getShowResultSetTypes().split(","));
+            option.setIgnoreRecordSet(true);
+            option.setSimpleOutput(false);
         }
         DataFlowAnalyzer analyzer = new DataFlowAnalyzer(req.getSqlText(), option);
         analyzer.generateDataFlow();
         dataflow dataflow = analyzer.getDataFlow();
-        if(req.isIgnoreRecordSet()){
+        if(req.isIgnoreRecordSet() && Objects.isNull(req.getShowResultSetTypes())){
             analyzer = new DataFlowAnalyzer("", option.getVendor(), false);
             analyzer.setIgnoreRecordSet(req.isIgnoreRecordSet());
             analyzer.getOption().setShowERDiagram(true);
