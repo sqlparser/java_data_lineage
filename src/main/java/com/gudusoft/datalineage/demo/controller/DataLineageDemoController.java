@@ -6,11 +6,9 @@ import gudusoft.gsqlparser.EDbVendor;
 import gudusoft.gsqlparser.dlineage.DataFlowAnalyzer;
 import gudusoft.gsqlparser.dlineage.dataflow.model.Option;
 import gudusoft.gsqlparser.dlineage.dataflow.model.RelationshipType;
-import gudusoft.gsqlparser.dlineage.dataflow.model.json.Dataflow;
 import gudusoft.gsqlparser.dlineage.dataflow.model.xml.dataflow;
 import gudusoft.gsqlparser.dlineage.graph.DataFlowGraphGenerator;
 import gudusoft.gsqlparser.dlineage.util.DataflowUtility;
-import gudusoft.gsqlparser.util.json.JSON;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,15 +47,11 @@ public class DataLineageDemoController {
         if(req.isTableLevel()){
             dataflow = DataflowUtility.convertToTableLevelDataflow(dataflow);
         }
-        Dataflow model = DataFlowAnalyzer.getSqlflowJSONModel(dataflow, option.getVendor());
-        System.out.println(JSON.toJSONString(model));
-
         if(dataflow.getRelationships().size() > 2000){
             return Result.error(500, "More than 2,000 relationships, the front end can not be displayed!");
         }
         DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
         String result = generator.genDlineageGraph(option.getVendor(),req.isIndirect(), dataflow);
-        System.out.println(JSON.toJSONString(dataflow));
         return Result.success(result);
     }
 
