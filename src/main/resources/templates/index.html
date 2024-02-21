@@ -53,7 +53,8 @@
                     dataType : 'json',
                     contentType : 'application/json;charset=UTF-8',
                     success : function(result) {
-                        sqlflow.visualizeJSON(JSON.parse(result.data), { layout: true });
+                        let data = JSON.parse(result.data);
+                        sqlflow.visualizeJSON(data, { layout: true });
                     }
                 });
             };

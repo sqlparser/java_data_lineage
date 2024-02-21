@@ -27,6 +27,7 @@ public class DataLineageDemoController {
         option.setVendor(EDbVendor.valueOf(req.getDbVendor()));
         option.setSimpleOutput(false);
         option.setIgnoreRecordSet(false);
+        option.filterRelationTypes("fdd,fddi,frd,fdr".split(","));
         option.setSimpleShowFunction(req.isSimpleShowFunction());
         option.setShowConstantTable(req.isShowConstantTable());
         if(Objects.nonNull(req.getShowResultSetTypes())){
