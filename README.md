@@ -29,6 +29,7 @@ Compile with the following Maven command, The compiled jar package is under the 
 ```
 mvn package
 ```
+Of course, you can skip this step because there is already a compiled executable in the Bin Folder.
 #### Run the program
 ```
 java -jar java_data_lineage-1.0.0.jar
