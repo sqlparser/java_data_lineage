@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.gudusoft</groupId>
 	<artifactId>java_data_lineage</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>java_data_lineage</name>
 	<description>Demo project for GSP</description>
 	<properties>
@@ -54,8 +54,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope >true</includeSystemScope>
+				</configuration>
 			</plugin>
 		</plugins>
-	</build>
-
+	</build >
 </project>
