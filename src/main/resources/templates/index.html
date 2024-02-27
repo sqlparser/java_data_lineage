@@ -5,6 +5,7 @@
         <title>Data lineage view</title>
         <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <script src="jquery.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
         <script src="sqlflow.widget.3.5.19.js"></script>
         <script src="samplesql.js"></script>
         <script>
@@ -123,7 +124,7 @@
             <form class="form-inline top">
                 <div class="form-group">
                     <label for="dbvendor">dbvendor: </label>
-                    <select id="dbvendor" class="form-control" onchange="dbvendorChange()">
+                    <select id="dbvendor" class="form-control  input-sm" onchange="dbvendorChange()">
                         <option value="dbvathena">athena</option>
                         <option value="dbvazuresql">azuresql</option>
                         <option value="dbvbigquery">bigquery</option>
@@ -152,76 +153,147 @@
                         <option value="dbvvertica">vertica</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>setting: </label>
-                    <label class="checkbox-inline">
-                        <input name="setting" type="checkbox" value="indirect" onclick="visualize()"> indirect
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="setting" type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="setting" type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="setting" type="checkbox" value="tableLevel" onclick="visualize()"> table level
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>showResultSetTypes: </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="array" onclick="visualize()"> array
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="struct" onclick="visualize()"> struct
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="result_of" onclick="visualize()"> result_of
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="cte" onclick="visualize()"> cte
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="insert_select" onclick="visualize()"> insert_select
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="update_select" onclick="visualize()"> update_select
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="merge_update" onclick="visualize()"> merge_update
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="merge_insert" onclick="visualize()"> merge_insert
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="output" onclick="visualize()"> output
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="update_set" onclick="visualize()"> update_set
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="pivot_table" onclick="visualize()"> pivot_table
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize()"> unpivot_table
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="rs" onclick="visualize()"> rs
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="function" onclick="visualize()"> function
-                    </label>
-                    <label class="checkbox-inline">
-                        <input name="showResultSetTypes" type="checkbox" value="case_when" onclick="visualize()"> case_when
-                    </label>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="visualize()">visualize data lineage</button>
-                <button type="button" class="btn btn-success" onclick="visualizeER()">visualize ER diagram</button>
+                <button type="button" class="btn btn-default btn-sm" style="margin-left: 8px" data-toggle="modal" data-target="#settingID">
+                    Setting
+                </button>
+                <button type="button" class="btn btn-default btn-sm" style="margin-left: 8px" data-toggle="modal" data-target="#showResultSetTypesID">
+                    Show ResultSet Types
+                </button>
+                <button type="button" class="btn btn-primary" style="margin-left: 8px" onclick="visualize()">visualize data lineage</button>
+                <button type="button" class="btn btn-success" style="margin-left: 8px" onclick="visualizeER()">visualize ER diagram</button>
             </form>
             <div id="sqlflow"></div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="settingID" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="settingModalLabel">Setting</h4>
+                    </div>
+                    <div class="modal-body" style="font-size: 16px">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="setting" type="checkbox" value="indirect" onclick="visualize()"> indirect
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="setting" type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="setting" type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="setting" type="checkbox" value="tableLevel" onclick="visualize()"> table level
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="showResultSetTypesID" tabindex="-1" role="dialog" aria-labelledby="showResultSetTypesModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="showResultSetTypesModalLabel">Show ResultSet Types</h4>
+                    </div>
+                    <div class="modal-body" style="font-size: 16px">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="array" onclick="visualize()"> array
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="struct" onclick="visualize()"> struct
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="result_of" onclick="visualize()"> result_of
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="cte" onclick="visualize()"> cte
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="insert_select" onclick="visualize()"> insert_select
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="update_select" onclick="visualize()"> update_select
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="merge_update" onclick="visualize()"> merge_update
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="merge_insert" onclick="visualize()"> merge_insert
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="output" onclick="visualize()"> output
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="update_set" onclick="visualize()"> update_set
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="pivot_table" onclick="visualize()"> pivot_table
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize()"> unpivot_table
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="rs" onclick="visualize()"> rs
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="function" onclick="visualize()"> function
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="case_when" onclick="visualize()"> case_when
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
