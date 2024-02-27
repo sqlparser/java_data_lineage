@@ -1,4 +1,6 @@
-## table level
+## setting: table level
+
+oracle
 ```
 INSERT ALL
 	WHEN ottl < 100000 THEN
@@ -18,7 +20,7 @@ FROM orders o, customers c
 WHERE o.customer_id = c.customer_id;
 ```
 
-数据流图示：
+以上sql未打开“table level”的情况下，可以看到显示列到列之间的血缘关系，数据流图如下：
 
 ![png](../images/setting_tablelevel_01.png)
 

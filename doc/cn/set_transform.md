@@ -1,6 +1,8 @@
-## show transform
+## setting: show transform
 
 show transform 参数用来显示 SQL 语句中进行数据转换的表达式，即目标字段的数据是哪些源数据字段通过哪个表达式转换来的。例如：
+
+oracle
 ```
 select SUM(e.sal + Nvl(e.comm, 0)) AS sal from table1;
 ```

@@ -1,4 +1,5 @@
-## ignoreRecordSet
+## setting:ignoreRecordSet
+oracle
 ```
 INSERT ALL
 	WHEN ottl < 100000 THEN
@@ -19,7 +20,7 @@ WHERE o.customer_id = c.customer_id;
 ```
 ![png](../images/setting_ignoreRecordSet_01.png)
 
-数据流图示：
+以上sql未忽略中间结果集情况下，会有一个insert_select中间结果，其数据流图如下所示：
 
 ![png](../images/setting_ignoreRecordSet_02.png)
 

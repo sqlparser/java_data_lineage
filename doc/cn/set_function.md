@@ -1,5 +1,7 @@
-## show function
+## setting:show function
 在数据流分析过程中，function起着关键作用，它接受列作为参数，并生成可能是标量值或集合值的结果。
+
+oracle
 ```
 select round(salary) as sal from scott.emp
 ```

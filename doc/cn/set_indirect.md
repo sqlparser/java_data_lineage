@@ -1,4 +1,4 @@
-## 间接数据流和伪列介绍
+## setting: 间接数据流和伪列介绍
 
 本文介绍一些生成间接数据流的SQL元素。间接数据流通常由where子句、group by子句、聚合函数等中使用的列生成。
 
@@ -8,6 +8,8 @@ RelationRows是关系的伪列，用于表示关系中的行数。顾名思义�
 
 ### 1、RelationsRows在目标关系中
 以下述SQL为例：
+
+oracle
 ```
 SELECT a.empName "eName" FROM scott.emp a Where sal > 1000
 ```
@@ -21,6 +23,8 @@ select列表的总行数受where子句中sal列的值影响；因此，间接数
 
 ### 2. RelationsRows在源关系中
    这里是另一个示例SQL：
+
+   oracle
 ```
 SELECT count() totalNum, sum(sal) totalSal FROM   scott.emp
 ```
@@ -35,6 +39,8 @@ count（）函数和sum（sal）函数的值受scott.emp源表中的行数影响
 
 ### 3. 表级别的数据流关系中的RelationsRows
    RelationRows还用于表示表级数据流。
+
+oracle
 ```
 alter table t2 rename to t3;
 ```
@@ -48,6 +54,8 @@ alter table t2 rename to t3;
 如果用户需要表级溯源模型，这个用来表示表到列数据流的伪列稍后将用于生成表到表的数据流。
 如果在列到列的数据流中使用同一表中的其他列，而该表本身也在表到表的数据流中，那么，该伪列将使单个表能够同时包含列到列的数据流和表到表的数据流。
 以这个SQL为例
+
+oracle
 ```
 create view v1 as select f1 from t2;
 alter table t2 rename to t3;
