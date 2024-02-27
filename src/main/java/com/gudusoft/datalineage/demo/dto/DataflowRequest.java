@@ -12,6 +12,8 @@ public class DataflowRequest {
     private boolean simpleShowFunction = true;
     private String showResultSetTypes;
     private boolean ignoreRecordSet = true;
+
+    private boolean showTransform = false;
     private boolean tableLevel = false;
 
     public String getDbVendor() {
@@ -76,5 +78,13 @@ public class DataflowRequest {
 
     public void setTableLevel(boolean tableLevel) {
         this.tableLevel = tableLevel;
+    }
+
+    public boolean isShowTransform() {
+        return showTransform;
+    }
+
+    public void setShowTransform(boolean showTransform) {
+        this.showTransform = showTransform;
     }
 }

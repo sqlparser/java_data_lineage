@@ -35,26 +35,39 @@ java -jar java_data_lineage-1.0.0.jar
 java -jar java_data_lineage-1.0.0.jar --server.port=8000
 ```
 ### 界面参数说明
-##### dbvendor 指定数据库类型，默认是 oracle。
+##### 1、dbvendor 指定数据库类型
 
->支持 access,bigquery,couchbase,dax,db2,greenplum, gaussdb, hana,hive,impala,informix,mdx,mssql,
+>默认是 oracle，支持 access,bigquery,couchbase,dax,db2,greenplum, gaussdb, hana,hive,impala,informix,mdx,mssql,
 sqlserver,mysql,netezza,odbc,openedge,oracle,postgresql,postgres,redshift,snowflake,
 sybase,teradata,soql,vertica 
 
-##### Setting 常用参数设置
+##### 2、Setting 常用参数设置
 
-* indirect 显示间接血缘关系
+* [indirect 显示间接血缘关系](doc/cn/set_indirect.md)
+* [show function 显示函数](doc/cn/set_function.md)
+* [show constant 显示常量](doc/cn/set_constant.md)
+* [ignoreRecordSet 忽略中间结果集](doc/cn/set_ignoreRecordSet.md)
+* [table level 显示表级血缘关系](doc/cn/set_tablelevel.md)
+* [show transform 显示关系转换](doc/cn/set_transform.md)
 
-* show function 显示函数
-
-* show constant 显示常量
-
-* ignoreRecordSet 忽略中间结果集
-
-* table level 显示表级血缘关系
-
-##### Show ResultSet Types: 带有指定结果集类型的简单输出
->可选结果集类型有： array, struct, result_of, cte, insert_select, update_select, merge_update, merge_insert, output, update_set pivot_table, unpivot_table, alias, rs, function, case_when
+##### 3、Show ResultSet Types 指定结果集类型的简单输出
+可选结果集类型有： 
+* [array](doc/cn/rt_array.md)
+* [struct](doc/cn/rt_struct.md)
+* [result_of](doc/cn/rt_result_of.md)
+* [cte](doc/cn/rt_cte.md)
+* [insert_select](doc/cn/rt_insert_select.md)
+* [update_select](doc/cn/rt_update_select.md)
+* [merge_update](doc/cn/rt_merge_update.md)
+* [merge_insert](doc/cn/rt_merge_insert.md)
+* [output](doc/cn/rt_output.md)
+* [update_set](doc/cn/rt_update_set.md)
+* [pivot_table](doc/cn/rt_pivot_table.md)
+* [unpivot_table](doc/cn/rt_unpivot_table.md)
+* [alias](doc/cn/rt_alias.md)
+* [rs](doc/cn/rt_rs.md)
+* [function](doc/cn/rt_function.md)
+* [case_when](doc/cn/rt_case_when.md)
 
 ### 从各种数据库导出元数据
 您可以使用[SQLFlow ingester](https://github.com/sqlparser/sqlflow_public/releases) 从数据库导出元数据，并将其交给Gudu SQLFlow进行数据血缘分析。

@@ -30,6 +30,8 @@ public class DataLineageDemoController {
         option.filterRelationTypes("fdd,fddi,frd,fdr".split(","));
         option.setSimpleShowFunction(req.isSimpleShowFunction());
         option.setShowConstantTable(req.isShowConstantTable());
+        option.setTransform(req.isShowTransform());
+        option.setTransformCoordinate(req.isShowTransform());
         if(Objects.nonNull(req.getShowResultSetTypes())){
             option.showResultSetTypes(req.getShowResultSetTypes().split(","));
             option.setIgnoreRecordSet(true);

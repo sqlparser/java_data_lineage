@@ -23,6 +23,7 @@
                 data.simpleShowFunction = false;
                 data.indirect = false;
                 data.tableLevel = false;
+                data.showTransform = false;
                 for(let op of options){
                     if(op=='ignoreRecordSet'){
                         data.ignoreRecordSet = true;
@@ -38,6 +39,9 @@
                     }
                     if(op=='tableLevel'){
                         data.tableLevel = true;
+                    }
+                    if(op=='showTransform'){
+                        data.showTransform = true;
                     }
                 }
                 let showResultSetTypes = [];
@@ -192,6 +196,11 @@
                             </div>
                             <div class="checkbox">
                                 <label>
+                                    <input name="setting" type="checkbox" value="showTransform" onclick="visualize()"> show transform
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
                                     <input name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
                                 </label>
                             </div>
@@ -273,6 +282,11 @@
                             <div class="checkbox">
                                 <label>
                                     <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize()"> unpivot_table
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="showResultSetTypes" type="checkbox" value="alias" onclick="visualize()"> alias
                                 </label>
                             </div>
                             <div class="checkbox">
