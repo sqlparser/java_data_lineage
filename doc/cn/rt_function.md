@@ -2,11 +2,7 @@
 
 oracle
 ```
-SELECT
-COUNT( CASE WHEN AGE = 18 THEN 'countof18' END) EIGHTENN,
-COUNT( CASE WHEN AGE = 19 THEN 'countof19' END) NINETEEN
-FROM
-PeopleInfo
+select round(salary) as sal from scott.emp
 ```
 
 显示前：

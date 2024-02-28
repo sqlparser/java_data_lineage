@@ -51,20 +51,16 @@ sybase,teradata,soql,vertica
 * [show transform 显示关系转换](doc/cn/set_transform.md)
 
 ##### 3、Show ResultSet Types 指定结果集类型的简单输出
-可选结果集类型有： 
-* [array](doc/cn/rt_array.md)
-* [struct](doc/cn/rt_struct.md)
+可选结果集类型有：
 * [result_of](doc/cn/rt_result_of.md)
 * [cte](doc/cn/rt_cte.md)
 * [insert_select](doc/cn/rt_insert_select.md)
 * [update_select](doc/cn/rt_update_select.md)
 * [merge_update](doc/cn/rt_merge_update.md)
 * [merge_insert](doc/cn/rt_merge_insert.md)
-* [output](doc/cn/rt_output.md)
 * [update_set](doc/cn/rt_update_set.md)
 * [pivot_table](doc/cn/rt_pivot_table.md)
 * [unpivot_table](doc/cn/rt_unpivot_table.md)
-* [alias](doc/cn/rt_alias.md)
 * [rs](doc/cn/rt_rs.md)
 * [function](doc/cn/rt_function.md)
 * [case_when](doc/cn/rt_case_when.md)

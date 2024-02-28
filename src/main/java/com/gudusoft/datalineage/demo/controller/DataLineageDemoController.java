@@ -28,17 +28,20 @@ public class DataLineageDemoController {
         option.setSimpleOutput(false);
         option.setIgnoreRecordSet(false);
         option.filterRelationTypes("fdd,fddi,frd,fdr".split(","));
+        option.setLinkOrphanColumnToFirstTable(true);
+        option.setOutput(false);
         option.setSimpleShowFunction(req.isSimpleShowFunction());
         option.setShowConstantTable(req.isShowConstantTable());
         option.setTransform(req.isShowTransform());
         option.setTransformCoordinate(req.isShowTransform());
+        option.setShowCountTableColumn(true);
         if(Objects.nonNull(req.getShowResultSetTypes())){
             option.showResultSetTypes(req.getShowResultSetTypes().split(","));
             option.setIgnoreRecordSet(true);
             option.setSimpleOutput(false);
         }
         DataFlowAnalyzer analyzer = new DataFlowAnalyzer(req.getSqlText(), option);
-        analyzer.generateDataFlow();
+        analyzer.generateDataFlow(true);
         dataflow dataflow = analyzer.getDataFlow();
         if(req.isIgnoreRecordSet() && Objects.isNull(req.getShowResultSetTypes())){
             analyzer = new DataFlowAnalyzer("", option.getVendor(), false);

@@ -10,7 +10,7 @@ PeopleInfo
 ```
 显示前：
 
-![png](../images/rt_case_when_01.png)
+![png](../images/rt_case_when_01.png) 
 
 显示后：
 

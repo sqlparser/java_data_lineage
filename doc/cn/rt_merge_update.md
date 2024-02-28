@@ -13,8 +13,8 @@ insert (id, type, price) values (a.id, a.type, a.price)
 ```
 显示前：
 
-![png](../images/rt_merge_update_01.png)
+![png](../images/rt_merge_update_01.png) 
 
 显示后：
 
-![png](../images/rt_merge_update_02.png)
+![png](../images/rt_merge_insert_02.png)

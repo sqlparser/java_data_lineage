@@ -26,4 +26,4 @@ WHERE  city = 'NYC') b
 
 显示后：
 
-![png](../images/rt_result_of_02.png)
+![png](../images/rt_result_of_02.png) 

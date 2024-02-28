@@ -2,21 +2,7 @@
 
 oracle
 ```
-with aa as
-(
-select country_id ,row_number() over(order by country_id ) as ida
-from contry a
-)
-, bb as
-(
-select country_id ,row_number() over(order by country_id ) as idb
-from contry
-)
-, cc as
-(
-select  aa.ida, bb.idb from aa left join bb on aa.ida=bb.idb
-)
-select * from cc;
+CREATE VIEW viewA AS  SELECT a, b FROM  tableA;
 ```
 显示前：
 
@@ -24,4 +10,4 @@ select * from cc;
 
 显示后：
 
-![png](../images/rt_rs_02.png)
+![png](../images/rt_rs_02.png) 
