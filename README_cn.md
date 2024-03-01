@@ -46,7 +46,7 @@ sqlserver,mysql,netezza,odbc,openedge,oracle,postgresql,postgres,redshift,snowfl
 sybase,teradata,soql,vertica 
 
 #### <a id="note2"></a> 2. Setting 常用参数设置
-![png](doc/images/setting.png)
+
 * [indirect 显示间接血缘关系](doc/cn/set_indirect.md)
 * [show function 显示函数](doc/cn/set_function.md)
 * [show constant 显示常量](doc/cn/set_constant.md)
@@ -55,8 +55,9 @@ sybase,teradata,soql,vertica
 * [show transform 显示关系转换](doc/cn/set_transform.md)
 
 #### <a id="note3"></a> 3. Show ResultSet Types 指定结果集类型的简单输出]
-![png](doc/images/rt.png)
+
 可选结果集类型有：
+
 * [result_of](doc/cn/rt_result_of.md)
 * [cte](doc/cn/rt_cte.md)
 * [insert_select](doc/cn/rt_insert_select.md)
