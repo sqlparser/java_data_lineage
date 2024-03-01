@@ -39,13 +39,13 @@ java -jar bin/java_data_lineage-1.0.0.jar --server.port=8000
 ![png](doc/images/home.png) 
 
 ### 界面参数说明
-1. [dbvendor 指定数据库类型](#note1)
+#### <a id="note1"></a> 1. dbvendor 指定数据库类型
 
 >默认是 oracle，支持 access,bigquery,couchbase,dax,db2,greenplum, gaussdb, hana,hive,impala,informix,mdx,mssql,
 sqlserver,mysql,netezza,odbc,openedge,oracle,postgresql,postgres,redshift,snowflake,
 sybase,teradata,soql,vertica 
 
-2. [Setting 常用参数设置](#note2)
+#### <a id="note2"></a> 2. Setting 常用参数设置
 ![png](doc/images/setting.png)
 * [indirect 显示间接血缘关系](doc/cn/set_indirect.md)
 * [show function 显示函数](doc/cn/set_function.md)
@@ -54,7 +54,7 @@ sybase,teradata,soql,vertica
 * [table level 显示表级血缘关系](doc/cn/set_tablelevel.md)
 * [show transform 显示关系转换](doc/cn/set_transform.md)
 
-3. [Show ResultSet Types 指定结果集类型的简单输出](#note3)
+#### <a id="note3"></a> 3. Show ResultSet Types 指定结果集类型的简单输出]
 ![png](doc/images/rt.png)
 可选结果集类型有：
 * [result_of](doc/cn/rt_result_of.md)
