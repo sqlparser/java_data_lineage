@@ -41,6 +41,7 @@ The default port is 9600, if you need to change the port, for example to 8000, y
 ```
 java -jar bin/java_data_lineage-1.0.0.jar --server.port=8000
 ``` 
+![png](doc/images/home.png)
 	  
 ### Export metadata from various databases.
 You can export metadata from the database using [SQLFlow ingester](https://github.com/sqlparser/sqlflow_public/releases) 
