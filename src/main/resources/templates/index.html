@@ -10,7 +10,7 @@
         <script src="samplesql.js"></script>
         <script>
             var sqlflow;
-            const visualize = async () => {
+            const visualize = async (showType) => {
                 let data = {};
                 data.dbVendor = $("#dbvendor").val();
                 data.sqlText = sqlflow.sqltext.get();
@@ -51,17 +51,72 @@
                 if(showResultSetTypes.length>0){
                     data.showResultSetTypes = showResultSetTypes.join(",");
                 }
-                $.ajax({
-                    url : "sqlflow/datalineage",
-                    type : "POST",
-                    data : JSON.stringify(data),
-                    dataType : 'json',
-                    contentType : 'application/json;charset=UTF-8',
-                    success : function(result) {
-                        let data = JSON.parse(result.data);
-                        sqlflow.visualizeJSON(data, { layout: true });
-                    }
-                });
+                if(showType=='JSON'){
+                    $.ajax({
+                        url : "sqlflow/datalineage/json",
+                        type : "POST",
+                        data : JSON.stringify(data),
+                        dataType : 'json',
+                        contentType : 'application/json;charset=UTF-8',
+                        success : function(result) {
+                            if(result.code != 200){
+                                alert(result.msg);
+                                return;
+                            }
+                            $("#reslutcode").text(result.data);
+                        }
+                    });
+                }
+                else if(showType=='XML'){
+                    $.ajax({
+                        url : "sqlflow/datalineage/xml",
+                        type : "POST",
+                        data : JSON.stringify(data),
+                        dataType : 'json',
+                        contentType : 'application/json;charset=UTF-8',
+                        success : function(result) {
+                            if(result.code != 200){
+                                alert(result.msg);
+                                return;
+                            }
+                            $("#reslutcode").text(result.data);
+                        }
+                    });
+                }
+                else if(showType=='CSV'){
+                    $.ajax({
+                        url : "sqlflow/datalineage/csv",
+                        type : "POST",
+                        data : JSON.stringify(data),
+                        dataType : 'json',
+                        contentType : 'application/json;charset=UTF-8',
+                        success : function(result) {
+                            if(result.code != 200){
+                                alert(result.msg);
+                                return;
+                            }
+                            $("#reslutcode").text(result.data);
+                        }
+                    });
+                }
+                else{
+                    $.ajax({
+                        url : "sqlflow/datalineage",
+                        type : "POST",
+                        data : JSON.stringify(data),
+                        dataType : 'json',
+                        contentType : 'application/json;charset=UTF-8',
+                        success : function(result) {
+                            if(result.code != 200){
+                                alert(result.msg);
+                                return;
+                            }
+                            let data = JSON.parse(result.data);
+                            sqlflow.visualizeJSON(data, { layout: true });
+                        }
+                    });
+                }
+
             };
 
             const visualizeER = async () => {
@@ -75,6 +130,10 @@
                     dataType : 'json',
                     contentType : 'application/json;charset=UTF-8',
                     success : function(result) {
+                        if(result.code != 200){
+                            alert(result.msg);
+                            return;
+                        }
                         sqlflow.visualizeERJSON(JSON.parse(result.data), { layout: true });
                     }
                 });
@@ -84,10 +143,45 @@
                 let vendor = $("#dbvendor").val();
                 sqlflow.vendor.set(vendor);
                 sqlflow.sqltext.set(sampleSQL[vendor]);
-                visualize();
+                visualize('image');
+            };
+
+            const getFormatChange= async () => {
+                let format = $("#format").val();
+                $("#showTextResultLabel").text(format);
+            };
+            const getDataLineage= async () => {
+                let format = $("#format").val();
+                visualize(format);
+            };
+            const showDataLineage= async () => {
+                let format = $("#format").val();
+                if(format=='CSV'){
+                    visualize('image');
+                    return
+                }
+                let data = {};
+                data.dbVendor = $("#dbvendor").val();
+                data.text = sqlflow.sqltext.get();
+                data.format = format;
+                $.ajax({
+                    url : "sqlflow/showDataLineage",
+                    type : "POST",
+                    data : JSON.stringify(data),
+                    dataType : 'json',
+                    contentType : 'application/json;charset=UTF-8',
+                    success : function(result) {
+                        if(result.code != 200){
+                            alert(result.msg);
+                            return;
+                        }
+                        sqlflow.visualizeJSON(JSON.parse(result.data), { layout: true });
+                    }
+                });
             };
 
             document.addEventListener('DOMContentLoaded', async () => {
+                $("#ignoreRecordSetcheckbox").attr("checked","checked");
                 sqlflow = await SQLFlow.init({
                     container: document.getElementById('sqlflow'),
                     width: '100%',
@@ -101,7 +195,7 @@
                 });
                 sqlflow.vendor.set("dbvoracle");
                 sqlflow.sqltext.set(sampleSQL.dbvoracle);
-                visualize();
+                visualize('image');
             });
         </script>
         <style>
@@ -163,12 +257,21 @@
                 <button type="button" class="btn btn-default btn-sm" style="margin-left: 8px" data-toggle="modal" data-target="#showResultSetTypesID">
                     Show ResultSet Types
                 </button>
-                <button type="button" class="btn btn-primary" style="margin-left: 8px" onclick="visualize()">visualize data lineage</button>
+                <button type="button" class="btn btn-primary" style="margin-left: 8px" onclick="visualize('image')">visualize data lineage</button>
                 <button type="button" class="btn btn-success" style="margin-left: 8px" onclick="visualizeER()">visualize ER diagram</button>
+                <label for="format" style="margin-left: 16px">format: </label>
+                <select id="format" class="form-control input-sm" onchange="getFormatChange()">
+                    <option value="JSON">JSON</option>
+                    <option value="CSV">CSV</option>
+                    <option value="XML">XML</option>
+                </select>
+                <button onclick="getDataLineage()"  type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showTextResultModal">fetch</button>
+                <button onclick="showDataLineage()"  type="button" class="btn btn-primary btn-sm" >visualize</button>
                 <span style="float: right; margin-right: 8px"><a target="_blank" href="https://github.com/sqlparser/java_data_lineage/blob/main/README_cn.md">帮助</a></span>
                 <span style="float: right; margin-right: 8px"><a target="_blank" href="https://github.com/sqlparser/java_data_lineage/blob/main/README.md">Help</a></span>
             </form>
             <div id="sqlflow"></div>
+
         </div>
 
         <!-- Modal -->
@@ -185,32 +288,32 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="indirect" onclick="visualize()"> indirect
+                                    <input name="setting" type="checkbox" value="indirect" onclick="visualize('image')"> indirect
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="simpleShowFunction" onclick="visualize()"> show function
+                                    <input name="setting" type="checkbox" value="simpleShowFunction" onclick="visualize('image')"> show function
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="showConstantTable" onclick="visualize()"> show constant
+                                    <input name="setting" type="checkbox" value="showConstantTable" onclick="visualize('image')"> show constant
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="showTransform" onclick="visualize()"> show transform
+                                    <input name="setting" type="checkbox" value="showTransform" onclick="visualize('image')"> show transform
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize()"> ignoreRecordSet
+                                    <input id="ignoreRecordSetcheckbox" name="setting" type="checkbox" value="ignoreRecordSet" onclick="visualize('image')"> ignoreRecordSet
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="setting" type="checkbox" value="tableLevel" onclick="visualize()"> table level
+                                    <input name="setting" type="checkbox" value="tableLevel" onclick="visualize('image')"> table level
                                 </label>
                             </div>
                         </div>
@@ -232,65 +335,78 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="result_of" onclick="visualize()"> result_of
+                                    <input name="showResultSetTypes" type="checkbox" value="result_of" onclick="visualize('image')"> result_of
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="cte" onclick="visualize()"> cte
+                                    <input name="showResultSetTypes" type="checkbox" value="cte" onclick="visualize('image')"> cte
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="insert_select" onclick="visualize()"> insert_select
+                                    <input name="showResultSetTypes" type="checkbox" value="insert_select" onclick="visualize('image')"> insert_select
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="update_select" onclick="visualize()"> update_select
+                                    <input name="showResultSetTypes" type="checkbox" value="update_select" onclick="visualize('image')"> update_select
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="merge_update" onclick="visualize()"> merge_update
+                                    <input name="showResultSetTypes" type="checkbox" value="merge_update" onclick="visualize('image')"> merge_update
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="merge_insert" onclick="visualize()"> merge_insert
+                                    <input name="showResultSetTypes" type="checkbox" value="merge_insert" onclick="visualize('image')"> merge_insert
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="update_set" onclick="visualize()"> update_set
+                                    <input name="showResultSetTypes" type="checkbox" value="update_set" onclick="visualize('image')"> update_set
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="pivot_table" onclick="visualize()"> pivot_table
+                                    <input name="showResultSetTypes" type="checkbox" value="pivot_table" onclick="visualize('image')"> pivot_table
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize()"> unpivot_table
+                                    <input name="showResultSetTypes" type="checkbox" value="unpivot_table" onclick="visualize('image')"> unpivot_table
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="rs" onclick="visualize()"> rs
+                                    <input name="showResultSetTypes" type="checkbox" value="rs" onclick="visualize('image')"> rs
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="function" onclick="visualize()"> function
+                                    <input name="showResultSetTypes" type="checkbox" value="function" onclick="visualize('image')"> function
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="showResultSetTypes" type="checkbox" value="case_when" onclick="visualize()"> case_when
+                                    <input name="showResultSetTypes" type="checkbox" value="case_when" onclick="visualize('image')"> case_when
                                 </label>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showTextResultModal" tabindex="-1" role="dialog" aria-labelledby="showTextResultLabel">
+            <div class="modal-dialog" role="document" style="width: 80%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <span class="h4 modal-title" id="showTextResultLabel">JSON</span>
+                    </div>
+                    <div class="modal-body" style="font-size: 16px">
+                        <textarea id="reslutcode" style="width: 100%" rows="20"></textarea>
                     </div>
                 </div>
             </div>

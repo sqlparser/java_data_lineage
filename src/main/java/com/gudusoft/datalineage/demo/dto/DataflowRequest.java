@@ -16,6 +16,8 @@ public class DataflowRequest {
     private boolean showTransform = false;
     private boolean tableLevel = false;
 
+    private String delimiter = ",";
+
     public String getDbVendor() {
         return dbVendor;
     }
@@ -86,5 +88,13 @@ public class DataflowRequest {
 
     public void setShowTransform(boolean showTransform) {
         this.showTransform = showTransform;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
     }
 }
