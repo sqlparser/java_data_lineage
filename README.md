@@ -32,14 +32,14 @@ mvn package
 Of course, you can skip this step because there is already a compiled executable in the Bin Folder.
 #### Run the program
 ```
-java -jar bin/java_data_lineage-1.0.0.jar
+java -jar bin/java_data_lineage-1.1.0.jar
 ```
 When the startup is complete, open the program in the browser at the following URL:
 http://localhost:9600
 
 The default port is 9600, if you need to change the port, for example to 8000, you can start by the following command:
 ```
-java -jar bin/java_data_lineage-1.0.0.jar --server.port=8000
+java -jar bin/java_data_lineage-1.1.0.jar --server.port=8000
 ``` 
 ![png](doc/images/home.png)
 	  
