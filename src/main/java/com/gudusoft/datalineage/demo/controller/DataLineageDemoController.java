@@ -210,33 +210,38 @@ public class DataLineageDemoController {
     }
 
     @RequestMapping(value = "/showDataLineage", method = {RequestMethod.POST}, produces = "application/json;charset=utf-8")
-    public Result<String> showDataLineage(@Valid @RequestBody ShowDataLineageRequest req) throws Exception {
-        if (req.getFormat().equalsIgnoreCase("JSON")){
-            dataflow dataflow = generateGraphFromDataflowJson(com.alibaba.fastjson.JSON.parseObject(req.getText()));
-            DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
-            String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
-            return Result.success(result);
-        }
-        else  if (req.getFormat().equalsIgnoreCase("XML")){
-            dataflow dataflow = XML2Model.loadXML(dataflow.class, req.getText());
-            DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
-            String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
-            return Result.success(result);
-        }
-        else  if (req.getFormat().equalsIgnoreCase("CSV")){
-            Option option = new Option();
-            option.setVendor(EDbVendor.valueOf(req.getDbVendor()));
-            option.setSimpleOutput(false);
-            option.setIgnoreRecordSet(false);
-            DataFlowAnalyzer analyzer = new DataFlowAnalyzer(req.getText(), option);
-            analyzer.generateDataFlow();
-            dataflow dataflow = analyzer.getDataFlow();
-            DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
-            String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
-            return Result.success(result);
-        }
-        else{
-            return Result.error(500, "not support format: " + req.getFormat());
+    public Result<String> showDataLineage(@Valid @RequestBody ShowDataLineageRequest req)  {
+        try{
+            if (req.getFormat().equalsIgnoreCase("JSON")){
+                dataflow dataflow = generateGraphFromDataflowJson(com.alibaba.fastjson.JSON.parseObject(req.getText()));
+                DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
+                String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
+                return Result.success(result);
+            }
+            else  if (req.getFormat().equalsIgnoreCase("XML")){
+                dataflow dataflow = XML2Model.loadXML(dataflow.class, req.getText());
+                DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
+                String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
+                return Result.success(result);
+            }
+            else  if (req.getFormat().equalsIgnoreCase("CSV")){
+                Option option = new Option();
+                option.setVendor(EDbVendor.valueOf(req.getDbVendor()));
+                option.setSimpleOutput(false);
+                option.setIgnoreRecordSet(false);
+                DataFlowAnalyzer analyzer = new DataFlowAnalyzer(req.getText(), option);
+                analyzer.generateDataFlow();
+                dataflow dataflow = analyzer.getDataFlow();
+                DataFlowGraphGenerator generator = new DataFlowGraphGenerator();
+                String result = generator.genDlineageGraph(EDbVendor.valueOf(req.getDbVendor()),true, dataflow);
+                return Result.success(result);
+            }
+            else{
+                return Result.error(500, "not support format: " + req.getFormat());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error(500, "format error!");
         }
     }
 
