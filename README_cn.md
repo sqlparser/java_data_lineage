@@ -26,13 +26,13 @@ mvn package
 
 ### 运行程序
 ```
-java -jar bin/java_data_lineage-1.1.0.jar
+java -jar bin/java_data_lineage-1.1.2.jar
 ```
 启动完成后，在浏览器中打开以下网址以访问程序：http://localhost:9600
 
 默认端口号是9600，如果您需要更改端口号，例如改为8000，可以使用以下命令启动：
 ```
-java -jar bin/java_data_lineage-1.1.0.jar --server.port=8000
+java -jar bin/java_data_lineage-1.1.2.jar --server.port=8000
 ```
 界面如下：
 
